@@ -32,6 +32,8 @@ namespace SimpleM
 
     }
 
+    /*
+     * old ln function
     inline double ln(const double a)
     {
         const double z = (a-1)/(a+1); 
@@ -45,8 +47,8 @@ namespace SimpleM
 
         return sum * 2;
     }
-
-    inline double newln(const double a)
+    */
+    inline double ln(const double a)
     {
         const double z = (a-1)/(a+1);
         const double z_squared = pow(z,2); 
@@ -61,28 +63,16 @@ namespace SimpleM
 
     }
 
-    inline double ln(const double a, const uint8_t term)
-    {
-        const double z = (a-1)/(a+1); 
-        double sum = z;
-
-        for(uint8_t i = 1; i<term; i++)
-        {
-            uint8_t n = (2*i) + 1;
-            sum += pow(z, n) / n;
-        }
-
-        return sum * 2;
-    }
-
     inline double exp(const double a)
     {
 
         double sum = 1;
+        double base = a;
 
         for(unsigned int i = 1; i<6; i++)
         {
-            sum += pow(a, i) / fac(i); 
+            sum += base / fac(i);
+            base *= base;
         }
 
         return sum;
@@ -93,10 +83,15 @@ namespace SimpleM
         return exp(b * ln(a));
     }
 
-    /*
+    
     inline double sqrt(const double a)
     {
-        
+        return exp(1.0f/2.0f * ln(a));    
     }
-    */
+   
+    inline double root(const double base, const double value)
+    {
+        return exp(1.0f/base * ln(value));    
+    }
+
 }
