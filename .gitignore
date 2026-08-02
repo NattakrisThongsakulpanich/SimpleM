@@ -1,0 +1,7 @@
+/.vscode/
+/.git/
+/Benchmark/
+/build/
+/test/
+.clangd
+c_cpp_properties.json
