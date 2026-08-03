@@ -63,6 +63,11 @@ namespace SimpleM
 
     }
 
+    inline double log (const double base, const double a)
+    {
+        return ln(a)/ln(base);// need a faster algotithm soon. current: 2 * O(log n) complexity
+    }
+
     inline double exp(const double a)
     {
 
