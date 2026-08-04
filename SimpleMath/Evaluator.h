@@ -1,7 +1,6 @@
 #pragma once
-
-#include "Operator.h"
 #include "Combinatorics.h"
+#include "LinearAlgebra.h"
 
 namespace SimpleM
 {
@@ -20,7 +19,7 @@ namespace SimpleM
         template <typename Tl, typename Tr>
         static inline auto eval(const Tl &LHS, const Tr &RHS)
         {
-            return LHS + RHS;
+            return LHS - RHS;
         };
     };
 

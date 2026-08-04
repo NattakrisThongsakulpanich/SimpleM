@@ -15,7 +15,7 @@ namespace SimpleM
         {
             return data;
         }
-    };
+    }; 
 
     template <typename T>
     struct StoreType
@@ -67,7 +67,7 @@ namespace SimpleM
             return op::eval(value[i]);
         }
 
-    };
+    };  
 
     template<typename L, typename R>
     auto operator+(

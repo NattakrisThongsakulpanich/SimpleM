@@ -3,7 +3,15 @@
 
 namespace SimpleM
 {
-    
+    template <typename T, unsigned int t_len, unsigned int t_stride>
+    struct FlatView
+    {
+        const T* data;
+        constexpr static unsigned int length = t_len;
+        constexpr static unsigned int stride = t_stride; 
+    };
+
+
     template <typename T, unsigned int tRows, unsigned int tCols>
     struct Matrix : public EXPR<Matrix<T,tRows,tCols>>  
     {
@@ -28,6 +36,16 @@ namespace SimpleM
         inline const T& operator () (const unsigned int row, const unsigned int col) const
         {
             return matStack[ (row - 1) * tCols + (col - 1) ];
+        } 
+
+        FlatView<T, tCols, 0> getRowView(unsigned int row)
+        {
+            return FlatView<T, tCols, 0>{ &matStack[ (row-1) * tCols ] };
+        }
+
+        FlatView<T, tRows, tCols> getColView(unsigned int col)
+        {
+            return FlatView<T, tRows, tCols>{ &matStack[ col - 1 ] };
         }
 
         struct comma_chain
