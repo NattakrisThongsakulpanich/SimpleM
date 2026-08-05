@@ -3,7 +3,6 @@
 #include "../SimpleMath/Combinatorics.h"
 #include "../SimpleMath/Exponents.h"
 #include "../Benchmark/Benchmark.h"
-#include <cstdio>
 #include <iostream>
 
 void printSection(const char* name)
@@ -46,10 +45,6 @@ static double PowIntBenchmark(unsigned int)
 static double lnBenchmark(unsigned int)
 {
     return SimpleM::ln(2.0);
-}
-static double newlnBenchmark(unsigned int)
-{
-    return SimpleM::newln(2.0);
 }
 static double dpowBenchmark(unsigned int)
 {
@@ -106,16 +101,10 @@ int main()
     Benchmark::sum(1000000,PowIntBenchmark);
 
     printSection("sum of ln(2.0f), iteration: 10^6");
-    Benchmark::sum(1000000,lnBenchmark);
-
-    printSection("sum of newln(2.0f), iteration: 10^6 ");
-    Benchmark::sum(1000000,newlnBenchmark);
+    Benchmark::sum(1000000,lnBenchmark); 
 
     printSection("sum of 2.5^3.5 (dpow) , iteration: 10^6");
-    Benchmark::sum(1000000,dpowBenchmark);
-
-    printf("%.16f", SimpleM::ln(2.0f));
-    printf("%.16f", SimpleM::newln(2.0f));
+    Benchmark::sum(1000000,dpowBenchmark); 
 
     return 0;
 }

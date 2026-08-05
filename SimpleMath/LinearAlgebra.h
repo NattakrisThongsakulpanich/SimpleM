@@ -8,7 +8,12 @@ namespace SimpleM
     {
         const T* data;
         constexpr static unsigned int length = t_len;
-        constexpr static unsigned int stride = t_stride; 
+        constexpr static unsigned int stride = t_stride;
+
+        inline auto operator[](const unsigned int i)
+        {
+            return *(data + (i * t_stride));
+        }
     };
 
 
@@ -38,15 +43,29 @@ namespace SimpleM
             return matStack[ (row - 1) * tCols + (col - 1) ];
         } 
 
-        FlatView<T, tCols, 0> getRowView(unsigned int row)
+        //Index starts at (1,1)
+        FlatView<T, tCols, 1> getRowView(unsigned int row)
         {
-            return FlatView<T, tCols, 0>{ &matStack[ (row-1) * tCols ] };
+            return FlatView<T, tCols, 1>{ &matStack[ (row-1) * tCols ] };
         }
 
         FlatView<T, tRows, tCols> getColView(unsigned int col)
         {
             return FlatView<T, tRows, tCols>{ &matStack[ col - 1 ] };
         }
+    
+
+        //Index starts at (0,0)
+        FlatView<T, tCols, 1> getRowView_raw(unsigned int row)
+        {
+            return FlatView<T, tCols, 1>{ &matStack[ row * tCols ] };
+        }
+
+        FlatView<T, tRows, tCols> getColView_raw(unsigned int col)
+        {
+            return FlatView<T, tRows, tCols>{ &matStack[ col ] };
+        }
+
 
         struct comma_chain
         {
@@ -80,8 +99,40 @@ namespace SimpleM
 
     };
 
+    template <typename T, unsigned int lhsR,  unsigned int rhsC, unsigned int C_s>
+    struct MatProduct : EXPR<MatProduct<T,lhsR,rhsC,C_s>> 
+    {
+
+        Matrix<T,lhsR,C_s> &lhsMat;
+        Matrix<T,C_s,rhsC> &rhsMat;
+
+        MatProduct(Matrix<T,lhsR,C_s> &lhs, Matrix<T,C_s,rhsC> &rhs) : lhsMat(lhs), rhsMat(rhs) {};
+
+        constexpr static unsigned int productRows = lhsR;
+        constexpr static unsigned int productCols = rhsC;
+
+        inline auto operator[](unsigned i) const
+        {
+            unsigned row = i / productCols;
+            unsigned col = i % productCols;
+
+            T sum = 0;
+
+            FlatView<T,C_s, 1> viewRow = lhsMat.getRowView_raw(row);
+            FlatView<T,C_s,rhsC> viewCol = rhsMat.getColView_raw(col);
+
+            for(unsigned k = 0; k < C_s; ++k)
+            {
+                sum += viewRow[k] * viewCol[k];
+            }
+            return sum;
+        }
+ 
+    };
+        
     //SimpleM will be using a Eager Evaluation for a Matrix * Matrix for a while
-    // -> a Matrix * Matrix multiplication plan to be implement after trigs func finished 
+    // -> a Matrix * Matrix multiplication plan to be implement after trigs func finished
+    /*
     using namespace SimpleM;
     template <typename T, unsigned int C_s, unsigned int lhsR, unsigned int rhsC>
     inline auto operator * (
@@ -110,5 +161,6 @@ namespace SimpleM
             
         return newMat;
     };
+    */
 
 }

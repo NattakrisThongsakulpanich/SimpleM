@@ -2,6 +2,7 @@
 #include "./Expression.h"
 #include "./Operator.h"
 #include "./Evaluator.h"
+#include "LinearAlgebra.h"
 
 namespace SimpleM
 {
@@ -15,6 +16,12 @@ namespace SimpleM
         {
             return data;
         }
+
+        inline auto operator()(const unsigned int _0, const unsigned int _1) const 
+        {
+            return data;
+        }
+
     }; 
 
     template <typename T>
@@ -48,6 +55,11 @@ namespace SimpleM
             return op::eval(lhs[i], rhs[i]);
         }
 
+        inline auto operator()(const unsigned int r, const unsigned int c) const 
+        {
+            return op::eval(lhs(r,c), rhs(r,c));
+        }
+
     };
 
     template <typename T, typename op>
@@ -65,6 +77,11 @@ namespace SimpleM
         inline auto operator[](const unsigned int i) const 
         {
             return op::eval(value[i]);
+        }
+
+        inline auto operator()(const unsigned int r, const unsigned int c) const 
+        {
+            return op::eval(value(r,c));
         }
 
     };  
@@ -106,6 +123,15 @@ namespace SimpleM
             Value<T>,
             MulOp
         >(lhs.self(), Value<T>(rhs));
+    }
+
+    template<typename T, unsigned int lhsR, unsigned int rhsC, unsigned int C_s>
+    auto operator*(
+        Matrix<T,lhsR,C_s> &lhs,
+        Matrix<T,C_s,rhsC> &rhs
+    )
+    {
+        return MatProduct<T, lhsR, rhsC, C_s>(lhs, rhs);    
     }
 
     template<typename L, typename T>
