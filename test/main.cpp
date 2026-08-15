@@ -1,7 +1,7 @@
-#include "../SimpleMath/LinearAlgebra.h"
-#include "../SimpleMath/Operator.h"
-#include "../SimpleMath/Combinatorics.h"
-#include "../SimpleMath/Exponents.h"
+#include "../SimpleMath/LinearAlgebra/Matrix.h"
+#include "../SimpleMath/OperatorOverloader.h"
+#include "../SimpleMath/Combinatorics/Factorial.h"
+#include "../SimpleMath/Exponentials/Exponents.h"
 #include "../Benchmark/Benchmark.h"
 #include <iostream>
 

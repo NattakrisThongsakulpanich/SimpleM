@@ -1,6 +1,6 @@
 #pragma once 
 #include <cstdint>
-#include "Combinatorics.h"
+#include "../Combinatorics/Factorial.h"
 
 namespace SimpleM
 { 
@@ -44,13 +44,12 @@ namespace SimpleM
             const uint8_t n = (2*i) + 1;
             sum += pow(z, n) / n;
         }
-
         return sum * 2;
     }
     */
     inline double ln(const double a)
     {
-        const double z = (a-1)/(a+1);
+        const double z = (a-1.0f)/(a+1.0f);
         const double z_squared = pow(z,2); 
         double sum = 1.0f/13.0f;
 
@@ -59,7 +58,7 @@ namespace SimpleM
             sum = sum*z_squared + 1.0f/i;
         }
 
-        return sum * z * 2;
+        return sum * z * 2.0f;
 
     }
 
@@ -71,19 +70,19 @@ namespace SimpleM
     inline double exp(const double a)
     {
 
-        double sum = 1;
+        double sum = 1.0f;
         double base = a;
 
         for(unsigned int i = 1; i<6; i++)
         {
             sum += base / fac(i);
-            base *= base;
+            base *= a;
         }
 
         return sum;
     }
 
-    inline double dpow(const double a, const double b) // loose a precision at 8 decimal places
+    inline double dpow(const double a, const double b) // loose a precision at 8 decimal places too slow at O(n^2)
     {
         return exp(b * ln(a));
     }

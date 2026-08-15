@@ -1,35 +1,56 @@
-#pragma once
-#include "Combinatorics.h"
-#include "LinearAlgebra.h"
+#pragma once 
 
-namespace SimpleM
+
+
+namespace Symbolic
 {
+    //Standard Placeholder Symbolic 
+    struct ADD {};
+    struct SUB {};
+    struct MUL {};
+    struct DIV {};
+    struct TRANSPOSE {};
+}
 
-    struct AddOp
+namespace Evaluator  
+{
+    //Evolved Symbolic
+    // * Contains real evaluator.
+    // * ELM stand for Element Wise ...
+    struct ELM_ADD 
     {
         template <typename Tl, typename Tr>
-        static inline auto eval(const Tl &LHS, const Tr &RHS)
+        static inline auto eval(const Tl &LHS, const Tr &RHS, unsigned int index) 
         {
-            return LHS + RHS;
-        };
+            return LHS[index] + RHS[index]; 
+        }
     };
 
-    struct SubOp
+    struct ELM_SUB
     {
         template <typename Tl, typename Tr>
-        static inline auto eval(const Tl &LHS, const Tr &RHS)
+        static inline auto eval(const Tl &LHS, const Tr &RHS, unsigned int index) 
         {
-            return LHS - RHS;
-        };
+            return LHS[index] - RHS[index]; 
+        }
     };
 
-    struct MulOp
+    struct ELM_MUL 
     {
         template <typename Tl, typename Tr>
-        static inline auto eval(const Tl &LHS, const Tr &RHS)
+        static inline auto eval(const Tl &LHS, const Tr &RHS, unsigned int index) 
         {
-            return LHS * RHS;
-        };
+            return LHS[index] * RHS[index]; 
+        }
+    };
+
+    struct ELM_DIV 
+    {
+        template <typename Tl, typename Tr>
+        static inline auto eval(const Tl &LHS, const Tr &RHS, unsigned int index) 
+        {
+            return LHS[index] / RHS[index]; 
+        }
     };
 
 }

@@ -2,6 +2,14 @@
 
 namespace SimpleM
 {
+    
+    enum class ExprFormat
+    {
+        UNDEFINED = 0,
+        Matrix = 1,
+        Scalar = 2
+    };
+    
 
     template <typename T>
     struct EXPR 
