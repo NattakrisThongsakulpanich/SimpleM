@@ -19,6 +19,8 @@ namespace Benchmark
         auto end = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 
+        std::cout << "BenchmarkType : Summation" << "\n";
+        std::cout << "iteration : " << iteration << "\n";
         std::cout << "Time : " << duration.count() << " microseconds\n";
         std::cout << "T. Avg. per Call : " << ( duration.count() / static_cast<double>(iteration) ) * 1000 << " nanoseconds\n";
         std::cout << "Result : " << result << '\n';

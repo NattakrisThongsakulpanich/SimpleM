@@ -2,9 +2,10 @@
 
 #include "../ExpressionTraits.h"
 
-namespace Evaluator 
+namespace Symbolic
 {
-    struct ELM_ADD 
+
+    struct TRANSPOSE  
     {
         template <typename T>
         static inline auto eval(const T &V, unsigned int index) 
@@ -12,8 +13,14 @@ namespace Evaluator
             constexpr unsigned int rows = SimpleM::EXPR_TRAITS<T>::rows;
             return V(index % rows, index / rows); 
         }
-    };
 
-    //UnaryOpDispatcher is WIP
+        template <typename T>
+        static inline auto eval(const T &V, unsigned int row, unsigned int col) 
+        { 
+            return V(row, col); 
+        }
+
+
+    };
 
 }

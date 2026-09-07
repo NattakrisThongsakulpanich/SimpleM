@@ -2,7 +2,6 @@
 
 #include "./Value.h"
 #include "./LinearAlgebra/Matrix.h"
-#include "./BinaryOp.h"
 #include "Expression.h"
 #include "LinearAlgebra/MatrixProduct.h"
 

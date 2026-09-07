@@ -1,7 +1,6 @@
 #pragma once 
 
 #include "../Expression.h"
-#include "./Matrix.h"
 
 namespace SimpleM
 {
@@ -18,13 +17,14 @@ namespace SimpleM
         constexpr static unsigned int productRows = lhsR;
         constexpr static unsigned int productCols = rhsC;
 
-        inline auto operator[](const unsigned int i) const
+        const inline auto operator[](const unsigned int i) const
         {
             const unsigned int row = i / productCols;
             const unsigned int col = i % productCols;
 
             T sum = 0; 
-
+            
+            #pragma omp simd
             for(unsigned int k = 0; k < C_s ; ++k)
             {
                 sum += lhs(row,k) * rhs(k,col);
@@ -32,7 +32,7 @@ namespace SimpleM
             return sum;
         }
 
-        inline auto operator()(const unsigned int row, const unsigned int col)
+        const inline auto operator()(const unsigned int row, const unsigned int col) const 
         {
             T sum = 0; 
 

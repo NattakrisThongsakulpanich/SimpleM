@@ -5,52 +5,71 @@
 namespace Symbolic
 {
     //Standard Placeholder Symbolic 
-    struct ADD {};
-    struct SUB {};
-    struct MUL {};
-    struct DIV {};
-    struct TRANSPOSE {};
-}
-
-namespace Evaluator  
-{
-    //Evolved Symbolic
-    // * Contains real evaluator.
-    // * ELM stand for Element Wise ...
-    struct ELM_ADD 
+    struct ADD 
     {
         template <typename Tl, typename Tr>
         static inline auto eval(const Tl &LHS, const Tr &RHS, unsigned int index) 
         {
             return LHS[index] + RHS[index]; 
         }
+
+        template <typename Tl, typename Tr>
+        static inline auto eval(const Tl &LHS, const Tr &RHS, unsigned int row, unsigned int col) 
+        {
+            return LHS(row, col) + RHS(row, col); 
+        }
+
+
     };
 
-    struct ELM_SUB
+    struct SUB 
     {
         template <typename Tl, typename Tr>
         static inline auto eval(const Tl &LHS, const Tr &RHS, unsigned int index) 
         {
             return LHS[index] - RHS[index]; 
         }
-    };
 
-    struct ELM_MUL 
+        template <typename Tl, typename Tr>
+        static inline auto eval(const Tl &LHS, const Tr &RHS, unsigned int row, unsigned int col) 
+        {
+            return LHS(row, col) - RHS(row, col); 
+        }
+
+
+    };
+    struct MUL 
     {
         template <typename Tl, typename Tr>
         static inline auto eval(const Tl &LHS, const Tr &RHS, unsigned int index) 
         {
             return LHS[index] * RHS[index]; 
         }
-    };
+        
+        template <typename Tl, typename Tr>
+        static inline auto eval(const Tl &LHS, const Tr &RHS, unsigned int row, unsigned int col) 
+        {
+            return LHS(row, col) * RHS(row, col); 
+        }
 
-    struct ELM_DIV 
+    };
+    struct DIV 
     {
         template <typename Tl, typename Tr>
         static inline auto eval(const Tl &LHS, const Tr &RHS, unsigned int index) 
         {
             return LHS[index] / RHS[index]; 
         }
-    };
 
+        template <typename Tl, typename Tr>
+        static inline auto eval(const Tl &LHS, const Tr &RHS, unsigned int row, unsigned int col) 
+        {
+            return LHS(row, col) / RHS(row, col); 
+        }
+
+
+    };
+ 
 }
+
+

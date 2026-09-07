@@ -3,9 +3,8 @@
 #include <type_traits>
 
 #include "./Expression.h"
-#include "./BinaryOp.h"
-#include "./ExpressionTraits.h"
 #include "./BinaryOpDispatcher.h"
+#include "./UnaryOpDispatcher.h"
 #include "Evaluator.h"
 
 namespace SimpleM
@@ -87,6 +86,15 @@ namespace SimpleM
         using Recipe = BinaryOpDispatcher<Value<T>, R, Symbolic::MUL>;
 
         return typename Recipe::Expression(Value<T>(lhs), rhs.self());
-    } 
+    }
+
+    template <typename T, typename std::enable_if_t< EXPR_TRAITS<T>::Format == ExprFormat::Matrix, int> = 0>
+    inline auto Transpose(const EXPR<T> &V)
+    {
+        using Recipe = UnaryOpDispatcher<T, Symbolic::TRANSPOSE>;
+        return typename Recipe::Expression(V.self());
+    }
+
+
 
 }

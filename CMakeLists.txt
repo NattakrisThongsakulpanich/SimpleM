@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.22)
 
-set(CMAKE_C_COMPILER "clang")
-set(CMAKE_CXX_COMPILER "clang++")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(CMAKE_C_COMPILER "gcc")
+set(CMAKE_CXX_COMPILER "g++")
 
 project(SimpleMath)
 
@@ -15,3 +17,7 @@ set(SRC
 add_executable(test
     ${SRC}
 )
+
+# Add -ffast-math to unlock Fused Multiply-Add (FMA)
+target_compile_options(test PRIVATE -O3 -mavx2 -fopt-info-vec-optimized)
+
