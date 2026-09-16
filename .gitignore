@@ -3,5 +3,6 @@
 /.git/
 /build/
 /out/
+/Benchmark/build/
 .clangd
 c_cpp_properties.json
