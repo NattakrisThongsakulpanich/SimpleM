@@ -1,5 +1,5 @@
-#include "../SimpleMath/SimpleM.h"
-#include "../Benchmark/Benchmark.h"
+#include "./SimpleMath/SimpleM.hpp"
+#include "./Benchmark/Benchmark.h"
 #include <iostream>
 
 void printSection(const char* name)
@@ -31,11 +31,6 @@ static SimpleM::Matrix<float, 4, 4> g_MatResult;
 
 // --- Heavy Performance Test Workers ---
 
-// Test 1: Baseline Math (Factorial)
-static double FactorialBenchmark(unsigned int t) { return SimpleM::fac(5); }
-
-// Test 2: Double Precision Transcendental Math
-static double DpowBenchmark(unsigned int t) { return SimpleM::dpow(2.5, 3.5); }
 
 // Test 3: Matrix Deep Expression Chains (Addition and Double Scalar Scaling)
 static double MatrixExpressionChainBenchmark(unsigned int t)
@@ -119,12 +114,6 @@ int main()
     g_MatB << 16, 15, 14, 13,  12, 11, 10, 9,  8, 7, 6, 5,  4, 3, 2, 1;
 
     constexpr unsigned int ITERATIONS = 1000000; // 10^6 iterations
-
-    printSection("[PERFORMANCE] Pure Math: Factorial(5)");
-    Benchmark::sum(ITERATIONS, FactorialBenchmark);
-
-    printSection("[PERFORMANCE] Pure Math: 2.5^3.5 (dpow)");
-    Benchmark::sum(ITERATIONS, DpowBenchmark); 
 
     printSection("[PERFORMANCE] Linear Algebra: Matrix 4x4 Expression Chain ((A*2)+(3*B))");
     Benchmark::sum(ITERATIONS, MatrixExpressionChainBenchmark);
